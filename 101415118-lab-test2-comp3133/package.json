@@ -3,7 +3,7 @@
   "version": "0.0.0",
 "scripts": {
   "ng": "ng",
-  "start": "node dist/101415118-lab-test2-comp3133/server/server.mjs",
+ "start": "node dist/101415118-lab-test2-comp3133/server/main.js",
   "build": "ng build",
   "build:ssr": "ng build && ng run 101415118-lab-test2-comp3133:server",
   "serve:ssr": "node dist/101415118-lab-test2-comp3133/server/server.mjs"
