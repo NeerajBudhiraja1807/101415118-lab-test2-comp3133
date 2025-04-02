@@ -1,0 +1,60 @@
+<div class="mission-details-container">
+    <mat-spinner *ngIf="loading"></mat-spinner>
+    
+    <div *ngIf="error" class="error-message">
+      <mat-icon>error</mat-icon>
+      {{ error }}
+      <button mat-raised-button color="primary" (click)="goBack()">Go Back</button>
+    </div>
+  
+    <div *ngIf="mission && !loading" class="mission-card">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{ mission.mission_name }}</mat-card-title>
+          <mat-card-subtitle>Flight #{{ mission.flight_number }} • {{ mission.launch_year }}</mat-card-subtitle>
+        </mat-card-header>
+        
+        <img mat-card-image [src]="mission.links.mission_patch_small" [alt]="mission.mission_name + ' patch'">
+        
+        <mat-card-content>
+          <p>{{ mission.details || 'No mission details available' }}</p>
+          
+          <mat-list>
+            <mat-list-item>
+              <mat-icon matListItemIcon>rocket</mat-icon>
+              <div matListItemTitle>Rocket</div>
+              <div matListItemLine>{{ mission.rocket.rocket_name }} ({{ mission.rocket.rocket_type }})</div>
+            </mat-list-item>
+            
+            <mat-list-item>
+              <mat-icon matListItemIcon>launch</mat-icon>
+              <div matListItemTitle>Launch Status</div>
+              <div matListItemLine>{{ mission.launch_success ? 'Successful' : 'Failed' }}</div>
+            </mat-list-item>
+            
+            <mat-list-item>
+              <mat-icon matListItemIcon>landscape</mat-icon>
+              <div matListItemTitle>Landing Status</div>
+              <div matListItemLine>{{ getLandingStatus() }}</div>
+              <div matListItemLine>{{ getLandingDetails() }}</div>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+        
+        <mat-card-actions>
+          <button mat-button color="primary" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon> Back to Missions
+          </button>
+          <a mat-button color="accent" [href]="mission.links.article_link" target="_blank" *ngIf="mission.links.article_link">
+            <mat-icon>article</mat-icon> Article
+          </a>
+          <a mat-button color="accent" [href]="mission.links.wikipedia" target="_blank" *ngIf="mission.links.wikipedia">
+            <mat-icon>public</mat-icon> Wikipedia
+          </a>
+          <a mat-button color="accent" [href]="mission.links.video_link" target="_blank" *ngIf="mission.links.video_link">
+            <mat-icon>videocam</mat-icon> Watch Video
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>

@@ -1,0 +1,31 @@
+<div class="filter-container">
+    <div class="filter-group">
+      <label>Launch Year</label>
+      <mat-select [(ngModel)]="selectedYear" (selectionChange)="applyYear()">
+        <mat-option value="">All Years</mat-option>
+        <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
+      </mat-select>
+    </div>
+  
+    <div class="filter-group">
+      <label>Launch Success</label>
+      <mat-select [(ngModel)]="selectedLaunchSuccess" (selectionChange)="applyLaunchSuccess()">
+        <mat-option value="">All Launches</mat-option>
+        <mat-option *ngFor="let option of successOptions" [value]="option.value">
+          {{ option.label }}
+        </mat-option>
+      </mat-select>
+    </div>
+  
+    <div class="filter-group">
+      <label>Land Success</label>
+      <mat-select [(ngModel)]="selectedLandSuccess" (selectionChange)="applyLandSuccess()">
+        <mat-option value="">All Landings</mat-option>
+        <mat-option *ngFor="let option of successOptions" [value]="option.value">
+          {{ option.label }}
+        </mat-option>
+      </mat-select>
+    </div>
+  
+    <button mat-raised-button color="warn" (click)="onReset()">Reset Filters</button>
+  </div>
