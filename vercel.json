@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "dist/101415118-lab-test2-comp3133/server/server.mjs",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "dist/101415118-lab-test2-comp3133/server/server.mjs"
+      }
+    ]
+  }
+  
