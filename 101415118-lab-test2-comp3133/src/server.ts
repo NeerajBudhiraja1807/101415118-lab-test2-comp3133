@@ -14,32 +14,14 @@ const browserDistFolder = resolve(serverDistFolder, '../browser');
 const app = express();
 const angularApp = new AngularNodeAppEngine();
 
-/**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/**', (req, res) => {
- *   // Handle API request
- * });
- * ```
- */
+// Serve static files from /browser
+app.use(express.static(browserDistFolder, {
+  maxAge: '1y',
+  index: false,
+  redirect: false,
+}));
 
-/**
- * Serve static files from /browser
- */
-app.use(
-  express.static(browserDistFolder, {
-    maxAge: '1y',
-    index: false,
-    redirect: false,
-  }),
-);
-
-/**
- * Handle all other requests by rendering the Angular application.
- */
+// Handle all other requests by rendering the Angular application
 app.use('/**', (req, res, next) => {
   angularApp
     .handle(req)
@@ -49,22 +31,15 @@ app.use('/**', (req, res, next) => {
     .catch(next);
 });
 
-/**
- * Start the server if this module is the main entry point.
- * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
- */
-if (isMainModule(import.meta.url)) {
-  const port = process.env['PORT'] || 4000;
-  app.get('/', (req, res) => {
-    res.send('Angular SSR App is running');
-  });
-  app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
-  });
-}
+// Start the server
+const port = process.env['PORT'] || 4000;
+const server = app.listen(port, () => {
+  console.log(`Node Express server listening on port ${port}`);
+});
 
+// For Render health checks
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
 
-/**
- * Request handler used by the Angular CLI (for dev-server and during build) or Firebase Cloud Functions.
- */
 export const reqHandler = createNodeRequestHandler(app);
